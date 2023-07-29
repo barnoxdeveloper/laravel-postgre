@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\V1\UserController;
+use App\Http\Controllers\API\V1\{LoginController, UserController, ProductController};
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +15,19 @@ use App\Http\Controllers\API\V1\UserController;
 */
 
 
-// Route::get('user/{id}', [UserController::class, 'finUserId']);
+Route::prefix('v1')->group(function () {
+    // login
+    Route::post('login', [LoginController::class, 'login']);
+});
 
-// Route::resource('user', UserController::class);
-Route::resource('user', UserController::class);
-// Route::middleware('api')->group(function () {
-//     // Other API routes...
-// });
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    // logout
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-// Route::prefix('v1')->group(function () {
-//     Route::post('user/login', [UserController::class, 'login']);
-// });
+    // users
+    Route::resource('users', UserController::class);
+
+    // products
+    Route::resource('products', ProductController::class);
+});
 

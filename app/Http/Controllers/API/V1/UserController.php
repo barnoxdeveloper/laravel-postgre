@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
@@ -35,24 +33,24 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(UserRequest $request)
-    {   
+    {
         $validator = Validator::make($request->all(), $request->rules());
 
         if ($validator->fails()) {
             return ResponseFormatter::error(
-                ['error' => $validator->errors()], 
-                'Validation Error!', 
-                401
-            ); 
+                ['errors' => $validator->errors()],
+                'Validation Error!',
+                422
+            );
         }
         $userData = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
         ];
-    
+
         $user = $this->userRepository->store($userData);
-    
+
         return ResponseFormatter::success(
             $user,
             'User created successfully!'
@@ -64,9 +62,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $data = $this->userRepository->show($id);
+        $user = $this->userRepository->show($id);
+        if (!$user) {
+            return ResponseFormatter::error(
+                ['error' => 'User Not Found, ID : '.$id],
+                'User Not Found, ID : '.$id,
+                401
+            );
+        }
         return ResponseFormatter::success(
-            $data,
+            $user,
             'Success Get Data User ID : '.$id
         );
     }
@@ -76,17 +81,25 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
+        $validator = Validator::make($request->all(), $request->rules());
+        if ($validator->fails()) {
+            return ResponseFormatter::error(
+                ['errors' => $validator->errors()],
+                'Validation Error!',
+                422
+            );
+        }
         $userData = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
         ];
-    
+
         if ($request->has('password')) {
             $userData['password'] = bcrypt($request->input('password'));
         }
-    
+
         $user = $this->userRepository->update($id, $userData);
-    
+
         return ResponseFormatter::success(
             $user,
             'User updated successfully!'
@@ -99,10 +112,16 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = $this->userRepository->destroy($id);
-
+        if (!$user) {
+            return ResponseFormatter::error(
+                ['error' => 'User Not Found, ID : '.$id],
+                'User Not Found, ID : '.$id,
+                401
+            );
+        }
         return ResponseFormatter::success(
             $user,
-            'User deleted successfully!'
+            'User deleted successfully, ID : '.$id
         );
     }
 }

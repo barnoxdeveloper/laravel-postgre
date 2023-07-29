@@ -36,21 +36,21 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
         // Handle image upload and save to storage
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
         } else {
             $imagePath = null;
         }
-    
+
         Product::create([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'image' => $imagePath,
         ]);
-    
+
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 

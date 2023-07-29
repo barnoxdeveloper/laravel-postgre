@@ -15,7 +15,7 @@ class UserRepositoryImplement implements UserRepository
 
     public function index()
     {
-        return $this->model->get();
+        return $this->model->orderBy('id', 'ASC')->get();
     }
 
     public function store(array $data)
@@ -25,7 +25,8 @@ class UserRepositoryImplement implements UserRepository
 
     public function show($id)
     {
-        return $this->model->where('id', $id)->firstOrFail();
+        $user = $this->model->where('id', $id)->first();
+        return $user ? $user : $user = null;
     }
 
     public function update($id, array $data)
@@ -37,8 +38,7 @@ class UserRepositoryImplement implements UserRepository
 
     public function destroy($id)
     {
-        $user = $this->model->findOrFail($id);
-        $user->delete();
-        return $user;
+        $user = $this->model->find($id);
+        return $user ? $user->delete() : null;
     }
 }

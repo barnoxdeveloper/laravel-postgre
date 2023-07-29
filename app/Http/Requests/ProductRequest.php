@@ -6,7 +6,7 @@ use App\Helpers\ResponseFormatter;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class UserRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,15 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('users'); // Get the user ID from the route parameter
+        $productId = $this->route('products'); // Get the user ID from the route parameter
 
         return [
             'name' => 'required|string|max:255',
-            'email' => $this->isMethod('put')
-                ? 'required|email|unique:users,email,' . $userId
-                : 'required|email|unique:users,email', // Unique for update, but required for create
-            'password' => $this->isMethod('put') ? 'sometimes|string|min:8' : 'required|string|min:8',
+            'description' => 'required',
+            'price' => 'required|numeric|min:0',
+            'image' => $this->isMethod('put')
+                ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048,' . $productId
+                : 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Unique for update, but required for create
         ];
     }
 

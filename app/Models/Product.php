@@ -10,4 +10,10 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'price', 'image'];
+
+    // accessor
+    public function getImageAttribute($value)
+	{
+		return url('storage/' . $value);
+	}
 }
