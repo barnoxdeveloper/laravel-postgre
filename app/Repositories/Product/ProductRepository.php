@@ -2,45 +2,43 @@
 
 namespace App\Repositories\Product;
 
-interface ProductRepository
+use App\Models\Product;
+
+class ProductRepository
 {
-    /**
-     * Get all users.
-     *
-     * @return mixed
-     */
-    public function index();
+    private $model;
 
-    /**
-     * Create a new user.
-     *
-     * @param array $data
-     * @return mixed
-     */
-    public function store(array $data);
+    public function __construct(Product $model)
+    {
+        $this->model = $model;
+    }
 
-    /**
-     * Get user by ID.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function show($id);
+    public function index()
+    {
+        return $this->model->orderBy('id', 'ASC')->get();
+    }
 
-    /**
-     * Update user by ID.
-     *
-     * @param int $id
-     * @param array $data
-     * @return mixed
-     */
-    public function update($id, array $data);
+    public function store(array $data)
+    {
+        return $this->model->create($data);
+    }
 
-    /**
-     * Delete user by ID.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function destroy($id);
+    public function show($id)
+    {
+        $product = $this->model->where('id', $id)->first();
+        return $product ? $product : $product = null;
+    }
+
+    public function update(array $data, $id)
+    {
+        $product = Product::find($id);
+        $product->update($data);
+        return $product;
+    }
+
+    public function destroy($id)
+    {
+        $product = $this->model->find($id);
+        return $product ? $product->delete() : null;
+    }
 }

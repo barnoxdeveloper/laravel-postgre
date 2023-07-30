@@ -4,17 +4,17 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Requests\UserRequest;
+use App\Services\User\UserService;
 use App\Http\Controllers\Controller;
-use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    private $userRepository;
+    private $userService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserService $userService)
     {
-        $this->userRepository = $userRepository;
+        $this->userService = $userService;
     }
 
     /**
@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = $this->userRepository->index();
+        $data = $this->userService->index();
         return ResponseFormatter::success(
             $data,
             'Success Get Data User!'
@@ -35,7 +35,6 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $validator = Validator::make($request->all(), $request->rules());
-
         if ($validator->fails()) {
             return ResponseFormatter::error(
                 ['errors' => $validator->errors()],
@@ -43,14 +42,12 @@ class UserController extends Controller
                 422
             );
         }
-        $userData = [
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-        ];
-
-        $user = $this->userRepository->store($userData);
-
+        $data = $request->only([
+            'name',
+            'email',
+            'password'
+        ]);
+        $user = $this->userService->store($data);
         return ResponseFormatter::success(
             $user,
             'User created successfully!'
@@ -62,7 +59,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->userRepository->show($id);
+        $user = $this->userService->show($id);
         if (!$user) {
             return ResponseFormatter::error(
                 ['error' => 'User Not Found, ID : '.$id],
@@ -89,17 +86,12 @@ class UserController extends Controller
                 422
             );
         }
-        $userData = [
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-        ];
-
-        if ($request->has('password')) {
-            $userData['password'] = bcrypt($request->input('password'));
-        }
-
-        $user = $this->userRepository->update($id, $userData);
-
+        $data = $request->only([
+            'name',
+            'email',
+            'password'
+        ]);
+        $user = $this->userService->update($data, $id);
         return ResponseFormatter::success(
             $user,
             'User updated successfully!'
@@ -111,7 +103,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = $this->userRepository->destroy($id);
+        $user = $this->userService->destroy($id);
         if (!$user) {
             return ResponseFormatter::error(
                 ['error' => 'User Not Found, ID : '.$id],

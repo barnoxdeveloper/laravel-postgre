@@ -29,9 +29,9 @@ class ProductRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'required',
             'price' => 'required|numeric|min:0',
-            'image' => $this->isMethod('put')
-                ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048,' . $productId
-                : 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Unique for update, but required for create
+            // 'image' => $this->isMethod('put')
+            //     ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048,' . $productId
+            //     : 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Unique for update, but required for create
         ];
     }
 

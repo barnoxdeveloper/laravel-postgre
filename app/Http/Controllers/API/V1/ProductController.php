@@ -5,26 +5,27 @@ namespace App\Http\Controllers\API\V1;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Services\Product\ProductService;
 use Illuminate\Support\Facades\Validator;
-use App\Repositories\Product\ProductRepository;
 
 class ProductController extends Controller
 {
-    private $productRepository;
+    private $productService;
 
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductService $productService)
     {
-        $this->productRepository = $productRepository;
+        $this->productService = $productService;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = $this->productRepository->index();
+        $data = $this->productService->index();
         return ResponseFormatter::success(
             $data,
-            'Success Get Data Products!'
+            'Success Get Data Product!'
         );
     }
 
@@ -42,20 +43,13 @@ class ProductController extends Controller
                 422
             );
         }
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public');
-        } else {
-            $imagePath = null;
-        }
-        $productData = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image' => $imagePath,
-        ];
-
-        $products = $this->productRepository->store($productData);
-
+        $data = $request->only([
+            'name',
+            'description',
+            'price',
+            'image',
+        ]);
+        $products = $this->productService->store($data);
         return ResponseFormatter::success(
             $products,
             'Products created successfully!'
@@ -67,7 +61,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = $this->productRepository->show($id);
+        $product = $this->productService->show($id);
         if (!$product) {
             return ResponseFormatter::error(
                 ['error' => 'Product Not Found, ID : '.$id],
@@ -95,17 +89,15 @@ class ProductController extends Controller
             );
         }
 
-        $productData = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-        ];
+        $data = $request->only([
+            'name',
+            'description',
+            'price',
+            'image',
+        ]);
 
-        if ($request->hasFile('image')) {
-            $productData['image'] = $request->file('image');
-        }
+        $product = $this->productService->update($id, $data, $request->file('image'));
 
-        $product = $this->productRepository->update($id, $productData);
         if (!$product) {
             return ResponseFormatter::error(
                 ['error' => 'Product Not Found!'],
@@ -113,18 +105,20 @@ class ProductController extends Controller
                 401
             );
         }
+
         return ResponseFormatter::success(
             $product,
             'Product updated successfully!'
         );
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $product = $this->productRepository->destroy($id);
+        $product = $this->productService->destroy($id);
         if (!$product) {
             return ResponseFormatter::error(
                 ['error' => 'Product Not Found!'],

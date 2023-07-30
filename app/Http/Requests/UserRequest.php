@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -27,9 +28,16 @@ class UserRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'email' => $this->isMethod('put')
-                ? 'required|email|unique:users,email,' . $userId
-                : 'required|email|unique:users,email', // Unique for update, but required for create
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($this->route('user')),
+            ],
+            // 'email' => 'required|email|max:255',
+            // 'password' => 'required|max:255',
+            // 'email' => $this->isMethod('PUT')
+            //     ? 'required|email|unique:users,email,' . $userId
+            //     : 'required|email|unique:users,email', // Unique for update, but required for create
             'password' => $this->isMethod('put') ? 'sometimes|string|min:8' : 'required|string|min:8',
         ];
     }
