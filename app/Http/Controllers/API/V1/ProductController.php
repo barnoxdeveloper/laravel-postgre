@@ -44,6 +44,7 @@ class ProductController extends Controller
             );
         }
         $data = $request->only([
+            'category_id',
             'name',
             'description',
             'price',
@@ -90,6 +91,7 @@ class ProductController extends Controller
         }
 
         $data = $request->only([
+            'category_id',
             'name',
             'description',
             'price',
@@ -108,7 +110,7 @@ class ProductController extends Controller
 
         return ResponseFormatter::success(
             $product,
-            'Product updated successfully!'
+            'Product Updated Successfully!'
         );
     }
 
@@ -128,7 +130,7 @@ class ProductController extends Controller
         }
         return ResponseFormatter::success(
             $product,
-            'Product deleted successfully, ID : '.$id
+            'Product Deleted Successfully, ID : '.$id
         );
     }
 }

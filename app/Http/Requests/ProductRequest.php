@@ -26,12 +26,13 @@ class ProductRequest extends FormRequest
         $productId = $this->route('products'); // Get the user ID from the route parameter
 
         return [
+            'category_id' => 'required|string|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'required',
             'price' => 'required|numeric|min:0',
-            // 'image' => $this->isMethod('put')
-            //     ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048,' . $productId
-            //     : 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Unique for update, but required for create
+            'image' => $this->isMethod('put')
+                ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048,' . $productId
+                : 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Unique for update, but required for create
         ];
     }
 

@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Helpers\ResponseFormatter;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\UserRequest;
-use App\Services\User\UserService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\Validator;
+use App\Services\Category\CategoryService;
 
-class UserController extends Controller
+class CategoryController extends Controller
 {
-    private $userService;
+    private $categoryService;
 
-    public function __construct(UserService $userService)
+    public function __construct(CategoryService $categoryService)
     {
-        $this->userService = $userService;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -22,17 +22,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = $this->userService->index();
+        $data = $this->categoryService->index();
         return ResponseFormatter::success(
             $data,
-            'Success Get Data User!'
+            'Success Get Data Category!'
         );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $request)
+    public function store(CategoryRequest $request)
     {
         $validator = Validator::make($request->all(), $request->rules());
         if ($validator->fails()) {
@@ -44,13 +44,12 @@ class UserController extends Controller
         }
         $data = $request->only([
             'name',
-            'email',
-            'password'
+            'status',
         ]);
-        $user = $this->userService->store($data);
+        $category = $this->categoryService->store($data);
         return ResponseFormatter::success(
-            $user,
-            'User created successfully!'
+            $category,
+            'Category Created Successfully!'
         );
     }
 
@@ -59,24 +58,24 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->userService->show($id);
-        if (!$user) {
+        $category = $this->categoryService->show($id);
+        if (!$category) {
             return ResponseFormatter::error(
-                ['error' => 'User Not Found, ID : '.$id],
-                'User Not Found, ID : '.$id,
+                ['error' => 'Category Not Found, ID : '.$id],
+                'Category Not Found, ID : '.$id,
                 401
             );
         }
         return ResponseFormatter::success(
-            $user,
-            'Success Get Data User ID : '.$id
+            $category,
+            'Success Get Data Category ID : '.$id
         );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserRequest $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         $validator = Validator::make($request->all(), $request->rules());
         if ($validator->fails()) {
@@ -88,13 +87,12 @@ class UserController extends Controller
         }
         $data = $request->only([
             'name',
-            'email',
-            'password'
+            'status',
         ]);
-        $user = $this->userService->update($data, $id);
+        $category = $this->categoryService->update($data, $id);
         return ResponseFormatter::success(
-            $user,
-            'User updated successfully!'
+            $category,
+            'Category Updated Successfully!'
         );
     }
 
@@ -103,17 +101,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = $this->userService->destroy($id);
-        if (!$user) {
+        $category = $this->categoryService->destroy($id);
+        if (!$category) {
             return ResponseFormatter::error(
-                ['error' => 'User Not Found, ID : '.$id],
-                'User Not Found, ID : '.$id,
+                ['error' => 'Category Not Found, ID : '.$id],
+                'Category Not Found, ID : '.$id,
                 401
             );
         }
         return ResponseFormatter::success(
-            $user,
-            'User deleted successfully, ID : '.$id
+            $category,
+            'Category deleted successfully, ID : '.$id
         );
     }
 }

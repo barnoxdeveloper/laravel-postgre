@@ -24,8 +24,8 @@ class LoginController extends Controller
 
         // Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
-            // Generate a new token for the user
             $user = User::where('email', $request->email)->first();
+            // Generate a new token for the user
             $token = $user->createToken('auth-token')->plainTextToken;
             return ResponseFormatter::success([
                 'access_token' => $token,
@@ -34,7 +34,7 @@ class LoginController extends Controller
             ], 'Authenticated');
         } else {
             return ResponseFormatter::error([
-                'message' => 'Unauthorized',
+                'message' => 'Email or Password Wrong!',
             ], 'Authentication Failed', 500);
         }
     }
@@ -48,8 +48,8 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         // Revoke the user's token
-        $token = $request->user()->tokens()->delete();
+        $request->user()->tokens()->delete();
 
-        return ResponseFormatter::success($token, 'Token Revoked & Logged out successfully');
+        return ResponseFormatter::success('Token Revoked', 'Logged out successfully');
     }
 }

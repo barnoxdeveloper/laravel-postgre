@@ -19,7 +19,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|NN02H30HpEIMxH4e80iBD4TGEXb9YMBtfYj5igE8",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -63,7 +63,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|NN02H30HpEIMxH4e80iBD4TGEXb9YMBtfYj5igE8",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -81,12 +81,12 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "tiga",
+									"value": "satu",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "tiga@tiga.com",
+									"value": "satu@satu.com",
 									"type": "text"
 								},
 								{
@@ -129,12 +129,12 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "3|9yfn6YeI75I5UuQ85f0TFoGYDWLKtnaCqzUvJpc0",
+									"value": "",
 									"type": "string"
 								}
 							]
 						},
-						"method": "PUT",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Accept",
@@ -163,7 +163,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/users/1",
+							"raw": "http://127.0.0.1:8000/api/v1/users/01h7g1jcxvwj5080za96hq0mp6?_method=PUT",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -176,7 +176,13 @@
 								"api",
 								"v1",
 								"users",
-								"1"
+								"01h7g1jcxvwj5080za96hq0mp6"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
 							]
 						}
 					},
@@ -193,7 +199,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|NN02H30HpEIMxH4e80iBD4TGEXb9YMBtfYj5igE8",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -205,7 +211,7 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/users/1",
+							"raw": "http://127.0.0.1:8000/api/v1/users/01h7g1jcxvwj5080za96hq0mp6",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -218,7 +224,7 @@
 								"api",
 								"v1",
 								"users",
-								"1"
+								"01h7g1jcxvwj5080za96hq0mp6"
 							]
 						}
 					},
@@ -232,7 +238,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|NN02H30HpEIMxH4e80iBD4TGEXb9YMBtfYj5igE8",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -240,7 +246,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/users/3",
+							"raw": "http://127.0.0.1:8000/api/v1/users/01h7g1jcxvwj5080za96hq0mp6",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -253,7 +259,247 @@
 								"api",
 								"v1",
 								"users",
-								"3"
+								"01h7g1jcxvwj5080za96hq0mp6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Get Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/categories/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Tiga\",\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/categories/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Category Edit\",\n    \"status\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/categories/01h7g2vw6v1gq0vj0dv02n5cm7?_method=PUT",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"01h7g2vw6v1gq0vj0dv02n5cm7"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category By ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/categories/01h7g2vw6v1gq0vj0dv02n5cm7",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"01h7g2vw6v1gq0vj0dv02n5cm7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/categories/01h7g2vw6v1gq0vj0dv02n5cm7",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"01h7g2vw6v1gq0vj0dv02n5cm7"
 							]
 						}
 					},
@@ -275,7 +521,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "3|9yfn6YeI75I5UuQ85f0TFoGYDWLKtnaCqzUvJpc0",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -319,7 +565,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "3|9yfn6YeI75I5UuQ85f0TFoGYDWLKtnaCqzUvJpc0",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -336,13 +582,18 @@
 							"mode": "formdata",
 							"formdata": [
 								{
+									"key": "category_id",
+									"value": "01h7g31b13pa3e2zbhqr244trn",
+									"type": "text"
+								},
+								{
 									"key": "name",
-									"value": "Product 1",
+									"value": "Product 2",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "Product 1 Description",
+									"value": "Product 2 Description",
 									"type": "text"
 								},
 								{
@@ -390,7 +641,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "3|9yfn6YeI75I5UuQ85f0TFoGYDWLKtnaCqzUvJpc0",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -407,13 +658,18 @@
 							"mode": "formdata",
 							"formdata": [
 								{
+									"key": "category_id",
+									"value": "01h7g315r3z4nymmv8xcczece1",
+									"type": "text"
+								},
+								{
 									"key": "name",
-									"value": "edit",
+									"value": "edit 1",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "edit",
+									"value": "edit 1",
 									"type": "text"
 								},
 								{
@@ -424,12 +680,12 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/home/andelm22/Pictures/api-laravel.png"
+									"src": "/home/andelm22/Pictures/mangan-thumbnail.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/products/6?_method=PUT",
+							"raw": "http://127.0.0.1:8000/api/v1/products/01h7g40saws11cjnh6xvrrv0sr?_method=PUT",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -442,7 +698,7 @@
 								"api",
 								"v1",
 								"products",
-								"6"
+								"01h7g40saws11cjnh6xvrrv0sr"
 							],
 							"query": [
 								{
@@ -465,7 +721,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|NN02H30HpEIMxH4e80iBD4TGEXb9YMBtfYj5igE8",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -477,7 +733,7 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/users/1",
+							"raw": "http://127.0.0.1:8000/api/v1/products/01h7g40saws11cjnh6xvrrv0sr",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -489,8 +745,8 @@
 							"path": [
 								"api",
 								"v1",
-								"users",
-								"1"
+								"products",
+								"01h7g40saws11cjnh6xvrrv0sr"
 							]
 						}
 					},
@@ -504,7 +760,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|NN02H30HpEIMxH4e80iBD4TGEXb9YMBtfYj5igE8",
+									"value": "",
 									"type": "string"
 								}
 							]
@@ -512,7 +768,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/users/3",
+							"raw": "http://127.0.0.1:8000/api/v1/products/01h7g41jkesyx5cs10atr0qwet",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -524,8 +780,8 @@
 							"path": [
 								"api",
 								"v1",
-								"users",
-								"3"
+								"products",
+								"01h7g41jkesyx5cs10atr0qwet"
 							]
 						}
 					},
@@ -545,24 +801,19 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "name",
-									"value": "dua",
-									"type": "text"
-								},
-								{
 									"key": "email",
-									"value": "dua@dua.com",
+									"value": "admin@admin.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "andelm22",
+									"value": "password",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/",
+							"raw": "http://127.0.0.1:8000/api/v1/login",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -573,8 +824,8 @@
 							"port": "8000",
 							"path": [
 								"api",
-								"user",
-								""
+								"v1",
+								"login"
 							]
 						}
 					},
@@ -583,30 +834,24 @@
 				{
 					"name": "Logout",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "dua",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "dua@dua.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "andelm22",
-									"type": "text"
-								}
-							]
+							"formdata": []
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/",
+							"raw": "http://127.0.0.1:8000/api/v1/logout/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -617,7 +862,8 @@
 							"port": "8000",
 							"path": [
 								"api",
-								"user",
+								"v1",
+								"logout",
 								""
 							]
 						}

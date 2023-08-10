@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\V1\{LoginController, UserController, ProductController};
+use App\Http\Controllers\API\V1\{LoginController, UserController, CategoryController, ProductController};
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,9 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     // users
     Route::resource('users', UserController::class);
 
+    // categories
+    Route::resource('categories', CategoryController::class);
+
     // products
     Route::resource('products', ProductController::class);
 });
-

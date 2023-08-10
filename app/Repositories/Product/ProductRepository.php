@@ -15,7 +15,20 @@ class ProductRepository
 
     public function index()
     {
-        return $this->model->orderBy('id', 'ASC')->get();
+        return $this->model
+                    ->with('category')
+                    ->orderBy('name', 'ASC')
+                    ->get()
+                    ->map(function ($product) {
+                        return [
+                            'id' => $product->id,
+                            'name' => $product->name,
+                            'category_name' => $product->category->name,
+                            'description' => $product->description,
+                            'price' => $product->price,
+                            'image' => $product->image
+                        ];
+                    });
     }
 
     public function store(array $data)
@@ -25,13 +38,30 @@ class ProductRepository
 
     public function show($id)
     {
-        $product = $this->model->where('id', $id)->first();
-        return $product ? $product : $product = null;
+        $product = $this->model
+                    ->with('category')
+                    ->where('id', $id)
+                    ->first();
+
+        if (!$product) {
+            return null; // Return null if product not found
+        }
+
+        $categoryName = $product->category ? $product->category->name : null;
+
+        return [
+            'id' => $product->id,
+            'name' => $product->name,
+            'category_name' => $categoryName,
+            'description' => $product->description,
+            'price' => $product->price,
+            'image' => $product->image
+        ];
     }
 
     public function update(array $data, $id)
     {
-        $product = Product::find($id);
+        $product = Product::where('id', $id)->first();
         $product->update($data);
         return $product;
     }

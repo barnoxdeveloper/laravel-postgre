@@ -26,6 +26,7 @@ class ProductService {
 
         // Create product data without the image
         $productData = [
+            'category_id' => $data['category_id'],
             'name' => $data['name'],
             'description' => $data['description'],
             'price' => $data['price'],
@@ -52,15 +53,17 @@ class ProductService {
 
         if ($imageFile) {
             // Delete the old image from storage
-            if ($product->getRawOriginal('image')) {
-                Storage::disk('public')->delete($product->getRawOriginal('image'));
+            if ($product['image']) {
+                // Delete the old image using the URL stored in the array
+                $oldImagePath = str_replace(url('storage/'), '', $product['image']);
+                Storage::disk('public')->delete($oldImagePath);
             }
 
             // Save the new image
             $data['image'] = $this->handleFileUpload($imageFile);
         } else {
             // If the image is not changed, keep the existing image path
-            $data['image'] = $product->getRawOriginal('image');
+            $data['image'] = $product['image'];
         }
 
         return $this->repository->update($data, $id);
@@ -73,9 +76,13 @@ class ProductService {
         if (!$product) {
             return null;
         }
-        if ($product) {
-            Storage::disk('public')->delete($product->getRawOriginal('image'));
+
+        if ($product['image']) {
+            // Delete the image from storage
+            $imagePath = str_replace(url('storage/'), '', $product['image']);
+            Storage::disk('public')->delete($imagePath);
         }
+
         return $this->repository->destroy($id);
     }
 
